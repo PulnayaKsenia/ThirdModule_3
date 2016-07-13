@@ -1,10 +1,14 @@
 package com.thirdmodule.thirdtask;
 
-abstract class Instrument {
-    public abstract String getKey();
+public class Instrument {
+    private String name;
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Override
     public String toString() {
-        return "Instrument "+getKey();
+        return "Instrument " + name;
     }
 }

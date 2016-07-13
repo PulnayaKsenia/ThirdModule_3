@@ -1,11 +1,7 @@
 package com.thirdmodule.thirdtask;
 
-public class OtherKeyException extends Exception {
+public class WrongKeyException extends Exception {
     String key;
-
-    public OtherKeyException(String key) {
-        this.key = key;
-    }
 
     public String getKey() {
         return key;
@@ -15,3 +11,4 @@ public class OtherKeyException extends Exception {
         this.key = key;
     }
 }
+
