@@ -3,7 +3,7 @@ package com.thirdmodule.thirdtask;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws WrongKeyException {
+    public static void main(String[] args) {
         System.out.println("HELLO! This is our music shop!");
 
         Map<String, Integer> shop = new HashMap<>();
@@ -30,17 +30,22 @@ public class Main {
         System.out.println("New order:");
         for (Map.Entry orderNew : order.entrySet()) {
             System.out.println("Key: " + orderNew.getKey() + "; Value: " + orderNew.getValue());
-         }
+        }
 
         try {
-            Map<String, Integer> remainInstrument = afterOrder(shop, order);
+            List<Instrument> remainInstrument = prepareInstrument(shop, order);
             System.out.println("Remaining instrument in the stock: " + remainInstrument);
+            if (order.keySet() != shop.keySet()) {
+                throw new WrongKeyException();
+            }
         } catch (IllegalStateException ex) {
             System.out.println("There are not instruments in the stock!");
+        } catch (WrongKeyException e) {
+            System.out.println("No such instruments!");
         }
     }
 
-    private static Map<String, Integer> afterOrder(Map<String, Integer> shop, Map<String, Integer> order) {
+    public static List<Instrument> prepareInstrument(Map<String, Integer> shop, Map<String, Integer> order) {
         int guitarsToRemove = order.get("guitar");
         int pianosToRemove = order.get("piano");
         int trumpetsToRemove = order.get("trumpet");
@@ -48,14 +53,17 @@ public class Main {
         if (shop.get("guitar") < guitarsToRemove || shop.get("piano") < pianosToRemove ||
                 shop.get("trumpet") < trumpetsToRemove) throw new IllegalStateException();
 
-        int valueGuitar = shop.get("guitar");
-        shop.put("guitar", valueGuitar - 8);
-        int valuePiano = shop.get("piano");
-        shop.put("piano", valuePiano - 1);
-        int valueTrumpet = shop.get("trumpet");
-        shop.put("trumpet", valueTrumpet - 6);
-
-        return shop;
+        List<Instrument> result = new ArrayList<>();
+        for (int i = 0; i < pianosToRemove; i++) {
+            result.add(new Piano());
+        }
+        for (int i = 0; i < guitarsToRemove; i++) {
+            result.add(new Guitar());
+        }
+        for (int i = 0; i < trumpetsToRemove; i++) {
+            result.add(new Trumpet());
+        }
+        return result;
     }
 }
 

@@ -3,7 +3,7 @@ package com.thirdmodule.thirdtask;
 public class WrongKeyException extends Exception {
     private String keyInstrument;
 
-    public WrongKeyException(String keyInstrument) {
+    public void setKeyInstrument(String keyInstrument) {
         this.keyInstrument = keyInstrument;
     }
 
