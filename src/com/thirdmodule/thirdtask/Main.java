@@ -3,63 +3,62 @@ package com.thirdmodule.thirdtask;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
-        MusicShop shop = new MusicShop();
-        shop.setGuitars(16);
-        shop.setPianos(2);
-        shop.setTrumpets(7);
+    public static void main(String[] args) throws WrongKeyException {
+        System.out.println("HELLO! This is our music shop!");
 
-        System.out.println(shop);
+        Map<String, Integer> shop = new HashMap<>();
+        shop.put("guitar", 16);
+        shop.put("piano", 2);
+        shop.put("trumpet", 7);
+        shop.put("violin", 5);
+        shop.put("drum", 4);
+
+        System.out.println("The following instruments are available:");
+        for (Map.Entry shopInstrument : shop.entrySet()) {
+            System.out.println("Key: " + shopInstrument.getKey() + "; Value: " + shopInstrument.getValue());
+
+            if (shopInstrument.getValue().equals(0)) {
+                System.out.println("This item is absent in the stock");
+            }
+        }
 
         Map<String, Integer> order = new HashMap<>();
         order.put("guitar", 8);
         order.put("piano", 1);
         order.put("trumpet", 6);
 
+        System.out.println("New order:");
+        for (Map.Entry orderNew : order.entrySet()) {
+            System.out.println("Key: " + orderNew.getKey() + "; Value: " + orderNew.getValue());
+         }
+
         try {
-            List<Instrument> toRemove = prepareOder(shop, order);
-            System.out.println("This order: " + toRemove);
+            Map<String, Integer> remainInstrument = afterOrder(shop, order);
+            System.out.println("Remaining instrument in the stock: " + remainInstrument);
         } catch (IllegalStateException ex) {
             System.out.println("There are not instruments in the stock!");
         }
-        System.out.println(shop);
     }
 
-    private static List<Instrument> prepareOder(MusicShop shop, Map<String, Integer> order) {
+    private static Map<String, Integer> afterOrder(Map<String, Integer> shop, Map<String, Integer> order) {
         int guitarsToRemove = order.get("guitar");
         int pianosToRemove = order.get("piano");
         int trumpetsToRemove = order.get("trumpet");
 
-        if (shop.getGuitars() < guitarsToRemove || shop.getPianos() < pianosToRemove ||
-                shop.getTrumpets() < trumpetsToRemove) throw new IllegalStateException();
+        if (shop.get("guitar") < guitarsToRemove || shop.get("piano") < pianosToRemove ||
+                shop.get("trumpet") < trumpetsToRemove) throw new IllegalStateException();
 
-        shop.setPianos(shop.getPianos() - pianosToRemove);
-        shop.setGuitars(shop.getGuitars() - guitarsToRemove);
-        shop.setTrumpets(shop.getTrumpets() - trumpetsToRemove);
+        int valueGuitar = shop.get("guitar");
+        shop.put("guitar", valueGuitar - 8);
+        int valuePiano = shop.get("piano");
+        shop.put("piano", valuePiano - 1);
+        int valueTrumpet = shop.get("trumpet");
+        shop.put("trumpet", valueTrumpet - 6);
 
-        List<Instrument> result = new ArrayList<>();
-        for (int i = 0; i < pianosToRemove; i++) {
-            result.add(new Piano());
-        }
-        for (int i = 0; i < guitarsToRemove; i++) {
-            result.add(new Guitar());
-        }
-        for (int i = 0; i < trumpetsToRemove; i++) {
-            result.add(new Trumpet());
-        }
-        return result;
-    }
-
-    public void checkOrder(String key) {
-        try {
-            if ((!key.equals("guitar")) || (!key.equals("piano")) || (!key.equals("trumpet"))) {
-                throw new WrongKeyException();
-            }
-        } catch (WrongKeyException ex) {
-            System.out.println("You enter wrong key!");
-        }
+        return shop;
     }
 }
+
 
 
 

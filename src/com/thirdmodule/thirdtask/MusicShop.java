@@ -1,38 +1,20 @@
 package com.thirdmodule.thirdtask;
 
-import java.util.List;
+import java.util.Map;
 
 public class MusicShop {
-    private int pianos;
-    private int guitars;
-    private int trumpets;
+    Map<String, Integer> instrument;
 
-    public int getPianos() {
-        return pianos;
+    public Map<String, Integer> getInstrument() {
+        return instrument;
     }
 
-    public void setPianos(int pianos) {
-        this.pianos = pianos;
-    }
-
-    public int getGuitars() {
-        return guitars;
-    }
-
-    public void setGuitars(int guitars) {
-        this.guitars = guitars;
-    }
-
-    public int getTrumpets() {
-        return trumpets;
-    }
-
-    public void setTrumpets(int trumpets) {
-        this.trumpets = trumpets;
+    public void setInstrument(Map<String, Integer> instrument) {
+        this.instrument = instrument;
     }
 
     @Override
     public String toString() {
-        return "There are " + pianos + " pianos, " + guitars + " guitars, " + trumpets + " trumpets in the music shop";
+        return "MusicShop has next music instrument " + instrument;
     }
 }

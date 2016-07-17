@@ -1,14 +1,14 @@
 package com.thirdmodule.thirdtask;
 
 public class WrongKeyException extends Exception {
-    String key;
+    private String keyInstrument;
 
-    public String getKey() {
-        return key;
+    public WrongKeyException(String keyInstrument) {
+        this.keyInstrument = keyInstrument;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public String getKeyInstrument() {
+        return keyInstrument;
     }
 }
 
